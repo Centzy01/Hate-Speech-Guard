@@ -150,18 +150,48 @@ function createElement(callback) {
 }
 
 function createElementDiv(callback) {
-    d = document.createElement("div");
-    d.innerHTML = " -- HSG working : HATE SPEECH DETECT -- </br>[option] AudioMute : checked / black-display : checked / alert : checked"
-    d.color = "white"
-    d.style.fontSize = "medium"
-    d.style.position = "absolute";
-    d.style.zIndex = "2147483647";
-    d.style.fontFamily = "courier new";
-    d.style.textAlign="center";
-    d.style.left = "50%";
-    d.style.transform = "translateX(-50%)";
-    container.appendChild(d);
+    lnk_1 =  document.createElement("link");
+    lnk_1.href = "https://fonts.gstatic.com";
+    lnk_1.rel = "preconnect";
+    lnk_2 = document.createElement("link");
+    lnk_2.href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap"
+    lnk_2.rel = "stylesheet";
+    document.head.appendChild(lnk_1);
+    document.head.appendChild(lnk_2);
 
+    div = document.createElement('div')
+    div.style.display = "block";
+    div.style.width = "100%";
+    div.style.height = "100%";
+    div.style.textAlign = "center";
+    div.style.position = "absolute";
+    div.style.zIndex = "2147483647";
+    h = video.offsetHeight;
+    div.style.height = h +"px";
+    w = video.offsetHeight / 2 - video.offsetHeight/4
+    div.style.top = w +"px";
+    container.appendChild(div);
+
+    i = document.createElement('img');
+    i.src  = "https://i.postimg.cc/sxjrqfgZ/icon.png"
+    i.style.width = "100px";
+    i.style.height = "100px";
+    // i.style.left = "50%";
+    
+    d = document.createElement("div");
+    d.innerHTML = "HSG detected the hate speech"
+    d.style.color = "white"
+    d.style.fontSize = "x-large"
+    d.style.fontFamily = "'Libre Baskerville', serif";
+    d.style.textAlign="center";
+    d.style.top = "15px";
+    // d.style.left = "50%";
+    // d.style.transform = "translateX(-50%)";
+    div.appendChild(i);
+    div.appendChild(d);
+
+    el = document.querySelector('#movie_player > div.html5-video-container > div');
+    
     callback();
 }
 
