@@ -1,3 +1,5 @@
+var tag_list = "p"
+
 chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
   //alert(changeInfo.url);
   if (
@@ -17,37 +19,25 @@ chrome.tabs.onUpdated.addListener(function (tabId, changeInfo, tab) {
         });
       });
       fetchURL(url);
-    } else {
-      var tag_list = "h2, p";
-
-      chrome.tabs.executeScript(
-        {
-          code:
-            "var nodeList = document.querySelectorAll(" +
-            JSON.stringify(tag_list) +
-            ");" +
-            "nodeList.length",
-        },
-        function (length) {
-          for (var i = 0; i < length; i++) {
-            chrome.tabs.executeScript(
-              {
-                code:
-                  "var nodeList = document.querySelectorAll(" +
-                  JSON.stringify(tag_list) +
-                  ");" +
-                  "var info = [nodeList[" +
-                  JSON.stringify(i) +
-                  "].innerText," +
-                  JSON.stringify(i) +
-                  "];" +
-                  "info",
-              },
-              doMasking
-            );
-          }
+    } else if(chrome.runtime.lastError) return;
+    else {
+      chrome.tabs.executeScript({
+        code: 'var nodeList = document.querySelectorAll(' + JSON.stringify(tag_list) + ');' +
+            'nodeList.length'
+    }, async function (length) {
+        if(chrome.runtime.lastError) return;
+        for (var i = 0; i < length; i++) {
+    
+            console.log('******* start one **********')
+    
+            var text = await promise(i)
+    
+            console.log('******* end one **********')
+    
         }
-      );
+    
+    });
+
     }
   }
 });
@@ -100,42 +90,59 @@ function storeData(result, callback) {
   });
 }
 
-function doMasking(info) {
-  console.log(info[0][0]);
-  var textInfo = {
-    text: info[0][0],
-    num: info[0][1],
-  };
 
-  fetch("http://hsg.centralus.cloudapp.azure.com:3000/api/text", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(textInfo),
-  })
-    .then(function (response) {
-      return response.json();
-    })
-    .then((result) => {
-      console.log("Fetch Success");
-      console.log(result);
+var promise = function (i) {
+
+  return new Promise((resolve, reject) => {
       chrome.tabs.executeScript({
-        code:
-          "var nodeList = document.querySelectorAll(" +
-          JSON.stringify(tag_list) +
-          ");" +
-          "nodeList[" +
-          JSON.stringify(info[0][1]) +
-          "].innerText" +
-          " = " +
-          JSON.stringify(result) +
-          ";",
+          code: 'var nodeList = document.querySelectorAll(' + JSON.stringify(tag_list) + ');' +
+              'var r = [nodeList[' + JSON.stringify(i) + '].innerText,' + JSON.stringify(i) + '];' +
+              'r'
+      },function(r){
+        if(chrome.runtime.lastError) return;
+        doMasking(r,resolve);
       });
-    })
 
-    .catch((error) => console.log(error));
+  })
 }
+//request 보내고 texk masking 처리하는 메소드
+function doMasking(info,resolve) {
+  console.log(info[0][0])
+  var textInfo = {
+      text: info[0][0],
+      num: info[0][1]
+  }
+
+  fetch('http://hsg.centralus.cloudapp.azure.com:3000/api/text', {
+      method: 'POST',
+      headers: {
+          'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(textInfo)
+  }).then(function (response) {
+      return response.json()
+  })
+      .then((result) => {
+          console.log("Fetch Success")
+          console.log(result)
+
+          maskingHateSpeech(info[0][1], result);
+          resolve()
+          return result
+      })
+
+      .catch((error) => console.log(error))
+}
+
+//masking
+function maskingHateSpeech(i, result) {
+  chrome.tabs.executeScript({
+      code: 'var nodeList = document.querySelectorAll(' + JSON.stringify(tag_list) + ');' +
+          'nodeList[' + JSON.stringify(i) + '].innerText' + ' = ' + JSON.stringify(result) + ';'
+  });
+  console.log("finished")
+}
+
 
 // fetch('http://localhost:5000/api/video', {
 // fetch('http://hsg.centralus.cloudapp.azure.com:3000/api/video', {
