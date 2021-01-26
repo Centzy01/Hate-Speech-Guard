@@ -49,7 +49,7 @@ function fetchURL(url) {
     url: url,
   };
 
-  fetch('http://localhost:5000/api/video', {
+  fetch('http://hsg.centralus.cloudapp.azure.com:3000/api/video', {
     method: "POST",
     headers: {
       "Content-Type": "application/json",

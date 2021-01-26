@@ -143,7 +143,7 @@ function createElement(callback) {
     c.style.position = "absolute";
     c.style.zIndex = "2147483647";
     c.style.display = "block";
-    c.style.backgroundColor = "black";
+    c.style.backgroundColor = "white";
     container.appendChild(c);
 
     callback();
@@ -180,7 +180,7 @@ function createElementDiv(callback) {
     
     d = document.createElement("div");
     d.innerHTML = "HSG detected the hate speech"
-    d.style.color = "white"
+    d.style.color = "black"
     d.style.fontSize = "x-large"
     d.style.fontFamily = "'Libre Baskerville', serif";
     d.style.textAlign="center";
