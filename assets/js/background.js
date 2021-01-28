@@ -108,6 +108,7 @@ var promise = function (i) {
 //request 보내고 texk masking 처리하는 메소드
 function doMasking(info,resolve) {
   console.log(info[0][0])
+
   var textInfo = {
       text: info[0][0],
       num: info[0][1]

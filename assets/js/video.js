@@ -18,33 +18,35 @@ let timerId = setTimeout(function request() {
         .sync
         .get(["v_audio_mute"], function (result) {
             //console.log("v_audio_mute", result.v_audio_mute);
-            if(result.v_audio_mute == undefined ||result.v_audio_mute == null  )
-            {
+            if (typeof result.v_audio_mute == "undefined" || result.v_audio_mute == null) {
                 v_audio_mute = "checked"
+            } else {
+                v_audio_mute = result.v_audio_mute;
             }
-            v_audio_mute = result.v_audio_mute;
+
         });
+
     chrome
         .storage
         .sync
         .get(["v_display"], function (result) {
             //console.log("v_display", result.v_display);
-            if(result.v_display == undefined ||result.v_display == null)
-            {
+            if (typeof result.v_display == "undefined" || result.v_display == null) {
                 v_display = "checked"
+            } else {
+                v_display = result.v_display;
             }
-            v_display = result.v_display;
         });
     chrome
         .storage
         .sync
         .get(["v_alert"], function (result) {
             //console.log("v_alert", result.v_alert);
-            if(result.v_alert == undefined ||result.v_alert == null)
-            {
+            if (typeof result.v_alert == "undefined" || result.v_alert == null) {
                 v_alert = "checked"
+            } else {
+                v_alert = result.v_alert;
             }
-            v_alert = result.v_alert;
         });
 
     if (video.currentTime == undefined) {
@@ -63,19 +65,19 @@ let timerId = setTimeout(function request() {
                     if (v_audio_mute == "checked") 
                         video.muted = true;
                     
-                    if (container.childElementCount == 1 ) {
+                    if (container.childElementCount == 1) {
                         createElement(function () {
                             canvas = document.querySelector(
                                 "#movie_player > div.html5-video-container > canvas"
-                                
+
                             );
-                            if(v_display == "unchecked"){
+                            if (v_display == "unchecked") {
                                 canvas.style.display = "none";
                             }
-                            
-                            createElementDiv(function(){
+
+                            createElementDiv(function () {
                                 div = document.querySelector('#movie_player > div.html5-video-container > div');
-                                if(v_alert == "unchecked"){
+                                if (v_alert == "unchecked") {
                                     div.style.display = "none";
                                 }
                             });
@@ -86,7 +88,7 @@ let timerId = setTimeout(function request() {
                         canvas.height = video.offsetHeight;
                         div.style.display = "block";
                         canvas.style.display = "block";
-                        
+
                         // div.style.visibility  = "visible"
                     }
                 }
@@ -96,7 +98,7 @@ let timerId = setTimeout(function request() {
                     video.muted = false;
                     div.style.display = "none";
                     canvas.style.display = "none";
-                    
+
                     // div.style.visibility  = "hidden"
                 }
             }
@@ -150,14 +152,19 @@ function createElement(callback) {
 }
 
 function createElementDiv(callback) {
-    lnk_1 =  document.createElement("link");
+    lnk_1 = document.createElement("link");
     lnk_1.href = "https://fonts.gstatic.com";
     lnk_1.rel = "preconnect";
     lnk_2 = document.createElement("link");
-    lnk_2.href="https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=swap"
+    lnk_2.href = "https://fonts.googleapis.com/css2?family=Libre+Baskerville:wght@700&display=sw" +
+            "ap"
     lnk_2.rel = "stylesheet";
-    document.head.appendChild(lnk_1);
-    document.head.appendChild(lnk_2);
+    document
+        .head
+        .appendChild(lnk_1);
+    document
+        .head
+        .appendChild(lnk_2);
 
     div = document.createElement('div')
     div.style.display = "block";
@@ -167,31 +174,29 @@ function createElementDiv(callback) {
     div.style.position = "absolute";
     div.style.zIndex = "2147483647";
     h = video.offsetHeight;
-    div.style.height = h +"px";
-    w = video.offsetHeight / 2 - video.offsetHeight/4
-    div.style.top = w +"px";
+    div.style.height = h + "px";
+    w = video.offsetHeight / 2 - video.offsetHeight / 4
+    div.style.top = w + "px";
     container.appendChild(div);
 
     i = document.createElement('img');
-    i.src  = "https://i.postimg.cc/sxjrqfgZ/icon.png"
+    i.src = "https://i.postimg.cc/sxjrqfgZ/icon.png"
     i.style.width = "100px";
     i.style.height = "100px";
     // i.style.left = "50%";
-    
+
     d = document.createElement("div");
     d.innerHTML = "HSG detected the hate speech"
     d.style.color = "black"
     d.style.fontSize = "x-large"
     d.style.fontFamily = "'Libre Baskerville', serif";
-    d.style.textAlign="center";
+    d.style.textAlign = "center";
     d.style.top = "15px";
-    // d.style.left = "50%";
-    // d.style.transform = "translateX(-50%)";
+    // d.style.left = "50%"; d.style.transform = "translateX(-50%)";
     div.appendChild(i);
     div.appendChild(d);
 
     el = document.querySelector('#movie_player > div.html5-video-container > div');
-    
+
     callback();
 }
-
