@@ -3,15 +3,15 @@
 
 ![](https://img.shields.io/badge/ProjectType-TeamProject-orange?style=flat-square)  ![](https://img.shields.io/badge/Language-Javascript-critical?style=flat-square&logo=Javascript)  ![](https://img.shields.io/badge/Language-Python-critical?style=flat-square&logo=Python)  ![](https://img.shields.io/badge/Tools-VScode-brightgreen?style=flat-square&logo=VisualStudioCode)  ![](https://img.shields.io/badge/Tools-Pycharm-brightgreen?style=flat-square&logo=Pycharm)
 
-> HSG is an **Crome/Edge extension** that detects hate speech in real time on web pages.
+> HSG is an **Chrome/Edge extension** that detects hate speech in real time on web pages.
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125822586-a78468bb-f313-43c8-b67e-f742925eee0e.png)
 
   
 
-​
+
 
 ### <p align="center"> 🔥 2021 MicroSoft Imagine Cup Semifinals 🔥 </p>
 
@@ -19,11 +19,11 @@
 
 ## 👨‍👧‍👧 Team Info
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125805272-d2b8e4e6-051e-42b4-bdde-acd1327582aa.png)
 
-​
+
 
 We are Team En#Plane. We met at the university programming club En#.  We hope HSG will have a good influence on children, parents and global.
 
@@ -72,47 +72,47 @@ HSG considers the degree of user freedom. The option page helps parents to discu
 
 ### 1. Hate Speech Detection for Text
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125811475-d91dcbd9-09db-4d9e-9863-25d994b77b5c.png)
 
-​
+
 
 ### 2. Hate Speech Detection for Video
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125811574-6d54f72d-9e07-4b6b-9511-669c2ed33a99.png)
 
-​
+
 
 ### 3. Option Selection
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125812562-7628185d-d17d-4d21-9759-1f64040c307d.png)
 
   
 
-​
+
 
 ## 🛠️ Architecture
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125813977-cd1cf9f7-c20a-48f2-95df-eb0d5f285863.png)
 
   
 
-​
+
 
 When a user searches the web, it brings text. The text enters Azure's virtual machine server and determines whether it is a hate speech in a trained Python model. If the sentence is determined to be "hate speech", masking the sentence according to the option selected by the user. Filtered text/video is shown on the user's web browser.
 
-​
+
 
 ![](https://user-images.githubusercontent.com/64072741/125815205-2d7076e3-1987-4115-808f-297a54049ee6.png)
 
-​
+
 
 The deep learning model we're trying to design is a simple task defined by a binary classification(hate or not hate), and had to ensure minimal response speed and stability in order to avoid compromising user experience. Therefore, rather than using heavy SOTA models such as Bert, **We tried to design a neural net structure that could maintain a relatively light level of scale and computational complexity.** As a result, **we adopted the Bi-LSTM model** because the Bi-LSTM model showed the highest accuracy and moderate processing speed. Using the Bi-LSTM Model, a hate speech judgment is made for some sentences. For sentences that are judged to be hate speech, We used **the Lime(Local Interpretable Model-Agnostic Explanation) technique** to extract sound masking time and sentences that hate speech filtered. The Lime technique enables precise analysis of the evaluated sentences. Through the Lime technique, we can see why the sentence was judged as a hate speech and how much some words contributed to the result. Using this, we were able to identify the word portion to filter in sentence, and extract the time to filter from the video.
 
@@ -121,7 +121,7 @@ The deep learning model we're trying to design is a simple task defined by a bin
 -   Building server using  Node.js(Express)
 -  Upload on Cloud Server on Azure Virtual Machine 
 -  Make a part that detects hate speech in the video.
-    
+   
 
 ## 🔍 More News
 
