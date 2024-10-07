@@ -1,5 +1,5 @@
 {
-    "manifest_version": 2,
+    "manifest_version": 3,
     "name": "HSG for Kids",
     "description": "Hate Speech Guard for Kids",
     "version": "1.0.0",
